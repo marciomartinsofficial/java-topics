@@ -1,4 +1,4 @@
-package thread;
+package com.gmail.amarciosm.thread;
 
 public class ThreadGo {
 
