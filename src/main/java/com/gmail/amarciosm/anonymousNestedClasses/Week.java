@@ -1,5 +1,8 @@
 package com.gmail.amarciosm.anonymousNestedClasses;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 /**
@@ -10,7 +13,11 @@ public class Week {
 	private Integer year;
 	private Integer weeknr;
 	
-	
+	public Week(Integer year, Integer weeknr) {
+		super();
+		this.year = year;
+		this.weeknr = weeknr;
+	}
 	public Integer getYear() {
 		return year;
 	}
@@ -25,22 +32,37 @@ public class Week {
 	}
 	
 	public WeekIterator getIterator() {
-		return new WeekIterator(year, weeknr);
+		return new WeekIterator(this);
 	}
 	
 	public static class WeekIterator implements Iterator {
-		public WeekIterator(Integer year, Integer weeknr) {
-			
+		int next = 1;
+		Calendar calendar = null;
+		
+		public WeekIterator(Week aWeek) {
+			calendar = new GregorianCalendar();
+			calendar.clear();
+			calendar.set(Calendar.YEAR, aWeek.getYear());
+			calendar.set(Calendar.WEEK_OF_YEAR, aWeek.getWeeknr());
 		}
 
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return false;
+			return next <= 7;
 		}
 
 		public Object next() {
-			// TODO Auto-generated method stub
-			return null;
+			calendar.set(Calendar.DAY_OF_WEEK, next++);
+			return calendar.getTime();
+		}
+		
+		public static void main(String[] args) {
+			int year = Integer.parseInt(args[0]);
+			int weekNr = Integer.parseInt(args[1]);
+			Week week = new Week(year, weekNr);
+			
+			for(Iterator i = week.getIterator() ; i.hasNext() ;) {
+				System.out.println((Date)i.next());
+			}
 		}
 	}
 	
