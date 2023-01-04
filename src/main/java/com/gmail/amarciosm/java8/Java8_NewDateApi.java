@@ -1,16 +1,45 @@
 package com.gmail.amarciosm.java8;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.UnsupportedTemporalTypeException;
 
 public class Java8_NewDateApi {
 
 	public static void main(String[] args) {
-		//partOne();
+		partOne();
 		partTwo();
+		partThree();
+	}
+	
+	private static void partThree() {
+		Duration duration = Duration.ofDays(1);
+		System.out.println(duration);
+		
+		duration = Duration.ofMinutes(50);
+		System.out.println(duration);
+		System.out.println(duration.plusDays(1));
+		
+		LocalTime localTime = LocalTime.of(1, 30);
+		LocalTime localTimeNow = LocalTime.now();
+		duration = Duration.between(localTime, localTimeNow);
+		System.out.println(duration);
+		
+		try {
+			LocalDate birthday = LocalDate.of(1987, 3, 24);
+			LocalDate today = LocalDate.now();
+			duration = Duration.between(birthday, today);
+			System.out.println(duration);
+		} catch (UnsupportedTemporalTypeException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	private static void partTwo() {
